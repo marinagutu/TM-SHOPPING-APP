@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   FlatList,
   StyleSheet,
-  ActivityIndicator,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { COLORS } from "../constants";
@@ -16,6 +15,7 @@ import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import ErrorComponent from "../components/common/ErrorComponent";
+import Loading from "../components/common/Loading";
 
 type Product = {
   id: number;
@@ -71,7 +71,7 @@ const ProductsScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      {isLoading && <ActivityIndicator />}
+      {isLoading && <Loading />}
       {data?.products && (
         <>
           <Text style={styles.screenTitle}>{params.category}</Text>
@@ -92,6 +92,7 @@ const ProductsScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: COLORS.white,
+    justifyContent: "center",
     flex: 1,
   },
   screenTitle: {
@@ -130,6 +131,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "900",
     marginBottom: 20,
+  },
+  indicator: {
+    alignSelf: "center",
   },
 });
 
