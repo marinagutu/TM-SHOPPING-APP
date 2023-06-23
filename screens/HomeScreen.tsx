@@ -17,23 +17,20 @@ import { COLORS } from "../constants";
 const HomeScreen = () => {
   const navigation = useNavigation();
 
-  const { data, isLoading, error } = useFetch({
+  const { data, isLoading, error } = useFetch<string[]>({
     endpoint: "products/categories",
   });
 
-  const categories: string[] | null = data;
 
   const renderItem = ({ item }: { item: string }) => {
     return (
       <TouchableOpacity
         style={{ marginVertical: 5 }}
         onPress={() =>
-          navigation.navigate("Products", {
-            screen: "ProductsScreen",
-            params: {
+          navigation.navigate( "ProductsScreen",{
               category: item,
             },
-          })
+          )
         }
       >
         <View style={styles.container}>
@@ -54,7 +51,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      {categories && <FlatList data={categories} renderItem={renderItem} />}
+      {data && <FlatList data={data} renderItem={renderItem} />}
     </SafeAreaView>
   );
 };
