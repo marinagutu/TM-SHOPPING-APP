@@ -7,6 +7,7 @@ type Props = {
 };
 
 const Icon = ({ source, style }: Props) => {
+  console.log('aa')
   return <Image source={source} style={style} />;
 };
 export default Icon;
