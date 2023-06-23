@@ -14,6 +14,7 @@ import useFetch from "../hooks/useFetch";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";
 import ErrorComponent from "../components/common/ErrorComponent";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type Product = {
   id: number;
@@ -35,11 +36,8 @@ type Products = {
 
 const ProductsScreen = () => {
   type ProductScreenProps = RouteProp<HomeStackParamList, "ProductsScreen">;
-
   const params = useRoute<ProductScreenProps>().params;
-
-  const navigation = useNavigation();
-
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const { data, isLoading, error } = useFetch<Products>({
     endpoint: `products/category/${params.category}`,
   });

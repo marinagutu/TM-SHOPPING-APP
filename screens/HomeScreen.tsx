@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   FlatList,
   SafeAreaView,
@@ -7,15 +7,13 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
 import useFetch from "../hooks/useFetch";
-
 import { StyleSheet } from "react-native";
-
 import { COLORS } from "../constants";
+import { HomeStackParamList } from "../navigation/TabNavigator";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   const { data, isLoading, error } = useFetch<string[]>({
     endpoint: "products/categories",
@@ -27,7 +25,7 @@ const HomeScreen = () => {
       <TouchableOpacity
         style={{ marginVertical: 5 }}
         onPress={() =>
-          navigation.navigate( "ProductsScreen",{
+          navigation.navigate("ProductsScreen",{
               category: item,
             },
           )

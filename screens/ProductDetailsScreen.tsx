@@ -16,7 +16,7 @@ const ProductDetailsScreen = () => {
 return (
 <SafeAreaView style={{flex: 1}}>
   <Image source={{uri: product?.images[0]}} style={{flex: 0.5, }}></Image>
-  <View style={{flex: 0.5,  marginTop: -20, borderTopEndRadius: 10, borderTopLeftRadius: 10}}></View>
+  <View style={{flex: 0.6, backgroundColor:COLORS.white, marginTop: -20, borderTopEndRadius: 20, borderTopLeftRadius: 20}}></View>
 </SafeAreaView>
 )
 
