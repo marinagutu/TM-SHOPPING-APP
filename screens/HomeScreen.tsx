@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   FlatList,
   SafeAreaView,
@@ -7,33 +7,28 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
 import useFetch from "../hooks/useFetch";
-
 import { StyleSheet } from "react-native";
-
 import { COLORS } from "../constants";
+import { HomeStackParamList } from "../navigation/TabNavigator";
 
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
-  const { data, isLoading, error } = useFetch({
+  const { data, isLoading, error } = useFetch<string[]>({
     endpoint: "products/categories",
   });
 
-  const categories: string[] | null = data;
 
   const renderItem = ({ item }: { item: string }) => {
     return (
       <TouchableOpacity
         style={{ marginVertical: 5 }}
         onPress={() =>
-          navigation.navigate("Products", {
-            screen: "ProductsScreen",
-            params: {
+          navigation.navigate("ProductsScreen",{
               category: item,
             },
-          })
+          )
         }
       >
         <View style={styles.container}>
@@ -54,7 +49,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView>
-      {categories && <FlatList data={categories} renderItem={renderItem} />}
+      {data && <FlatList data={data} renderItem={renderItem} />}
     </SafeAreaView>
   );
 };

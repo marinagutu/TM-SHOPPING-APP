@@ -10,14 +10,13 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { COLORS } from "../constants";
 import useFetch from "../hooks/useFetch";
-import { RootStackParamList } from "../navigation/RootNavigator";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import ErrorComponent from "../components/common/ErrorComponent";
 import Loading from "../components/common/Loading";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-type Product = {
+export type Product = {
   id: number;
   brand: string;
   category: string;
@@ -37,9 +36,9 @@ type Products = {
 
 const ProductsScreen = () => {
   type ProductScreenProps = RouteProp<HomeStackParamList, "ProductsScreen">;
-
   const params = useRoute<ProductScreenProps>().params;
-
+  const navigation =
+    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const { data, isLoading, error } = useFetch<Products>({
     endpoint: `products/category/${params.category}`,
   });
@@ -48,11 +47,8 @@ const ProductsScreen = () => {
     return (
       <TouchableOpacity
         style={styles.container}
-        onPress={
-          () => {}
-          // navigation.navigate("CategoriesScreen", {
-          //   category: item,
-          // })
+        onPress={() =>
+          navigation.navigate("ProductDetailsScreen", { product: item })
         }
       >
         <Image source={{ uri: item.thumbnail }} style={styles.image} />
