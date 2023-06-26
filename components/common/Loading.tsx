@@ -25,7 +25,7 @@ const style = StyleSheet.create({
     marginTop: 10,
   },
   subtitle: {
-    color: COLORS.grayLight,
+    color: COLORS.graySecondary,
     fontSize: 16,
     marginTop: 5,
   },

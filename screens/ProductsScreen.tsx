@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   textDescription: {
-    color: COLORS.grayLight,
+    color: COLORS.secondary,
     fontSize: 11,
   },
   textPrice: {

@@ -12,7 +12,8 @@ export const COLORS = {
   white: "#FFFFFF",
   background: "#252C4A",
   grayPrimary: "#282E35",
-  grayLight: "#8C8C8C",
+  graySecondary: "#8C8C8C",
+  grayLight: "#EEEEEE",
 };
 
 export const FONTS = {

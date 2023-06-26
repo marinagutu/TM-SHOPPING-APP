@@ -16,8 +16,8 @@ export type TabStackPramsList = {
 export type HomeStackParamList = {
   HomeScreen: undefined;
   ProductsScreen: { category: string };
-  ProductDetailsScreen: {product: Product};};
-
+  ProductDetailsScreen: { product: Product };
+};
 
 const Tab = createBottomTabNavigator<TabStackPramsList>();
 const Stack = createNativeStackNavigator();
@@ -35,10 +35,14 @@ const HomeStack = () => {
         component={ProductsScreen}
         options={{ title: " " }}
       />
-          <Stack.Screen
+      <Stack.Screen
         name="ProductDetailsScreen"
         component={ProductDetailsScreen}
-        options={{ title: " " }}
+        options={{
+          title: " ",
+          presentation: "fullScreenModal",
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );
