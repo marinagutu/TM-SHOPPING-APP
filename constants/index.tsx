@@ -1,3 +1,3 @@
-import { COLORS, FONTS } from "./theme";
+import { COLORS, FONTS, STYLES } from "./theme";
 
-export { COLORS, FONTS };
+export { COLORS, FONTS, STYLES };

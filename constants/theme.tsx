@@ -1,5 +1,4 @@
 import { Dimensions } from "react-native";
-
 const { width, height } = Dimensions.get("window");
 
 export const COLORS = {
@@ -26,3 +25,37 @@ export const FONTS = {
     color: "white",
   },
 };
+
+export const STYLES = {
+  textPrimary: {
+    fontSize: 18,
+    fontWeight: "800" as FontWeight,
+    textTransform: "capitalize" as textTransform,
+    color: COLORS.black,
+  },
+  textSecondary: {
+    color: COLORS.graySecondary,
+    fontSize: 14,
+    textTransform: "capitalize" as textTransform,
+  },
+};
+
+type FontWeight =
+  | "normal"
+  | "bold"
+  | "100"
+  | "200"
+  | "300"
+  | "400"
+  | "500"
+  | "600"
+  | "700"
+  | "800"
+  | "900";
+
+type textTransform =
+  | "capitalize"
+  | "none"
+  | "uppercase"
+  | "lowercase"
+  | undefined;

@@ -2,26 +2,26 @@ import {
   View,
   StyleSheet,
   Text,
-  Pressable,
   TouchableOpacity,
   ViewStyle,
 } from "react-native";
 import { COLORS } from "../../constants";
 
 type QuantityButtonProps = {
-  styles: ViewStyle;
+  styles?: ViewStyle;
   leftAction: () => void;
   rightAction: () => void;
+  quantity?: number;
 };
 
 const QuantityButton = (props: QuantityButtonProps) => {
   return (
     <View style={{ ...styles.container, ...props.styles }}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={props.leftAction}>
         <Text style={styles.text}>-</Text>
       </TouchableOpacity>
-      <Text style={styles.text}>2</Text>
-      <TouchableOpacity>
+      <Text style={styles.text}>{props.quantity}</Text>
+      <TouchableOpacity onPress={props.rightAction}>
         <Text style={styles.text}>+</Text>
       </TouchableOpacity>
     </View>

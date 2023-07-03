@@ -22,12 +22,13 @@ export type Product = {
   category: string;
   description: string;
   discountPercentage: number;
+  quantity?: number;
   images: string[];
   rating: number;
   thumbnail: string;
   stock: string;
   title: string;
-  price: string;
+  price: number;
 };
 
 type Products = {
@@ -99,32 +100,34 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   list: {
-    padding: 10,
+    padding: 20,
   },
   container: {
     width: "50%",
     alignItems: "center",
     shadowColor: "#000",
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.15,
     shadowRadius: 3.84,
     elevation: 5,
   },
   image: {
-    width: 170,
-    height: 170,
+    width: 150,
+    height: 150,
     borderRadius: 10,
   },
   textTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "800",
     marginTop: 5,
   },
   textDescription: {
-    color: COLORS.secondary,
-    fontSize: 11,
+    color: COLORS.graySecondary,
+    marginVertical: 5,
+    textAlign: "justify",
+    fontSize: 14,
   },
   textPrice: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: "900",
     marginBottom: 20,
   },

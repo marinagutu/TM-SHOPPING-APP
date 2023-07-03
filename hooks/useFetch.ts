@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosError } from "axios";
 
 type Request = {
   endpoint: string;
@@ -11,14 +11,14 @@ interface TST {
   url: string;
 }
 
-const useFetch = <T>(props: Request) => {
+const useFetch = <T>(request: Request) => {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AxiosError | null>(null);
 
   const options = {
     method: "GET",
-    url: `https://dummyjson.com/${props.endpoint}`,
+    url: `https://dummyjson.com/${request.endpoint}`,
   };
 
   const fetchData = async () => {
@@ -26,7 +26,6 @@ const useFetch = <T>(props: Request) => {
 
     try {
       const response = await axios.request(options);
-
       setData(response.data);
       setIsLoading(false);
     } catch (error) {

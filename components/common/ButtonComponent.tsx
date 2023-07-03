@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  View,
   StyleSheet,
   ViewStyle,
   Image,
   Text,
   ImageSourcePropType,
   ImageStyle,
+  TouchableOpacity,
 } from "react-native";
 import { COLORS } from "../../constants";
 
@@ -16,11 +16,15 @@ type ButtonComponentProps = {
   frontIcon?: ImageSourcePropType;
   trailingIcon?: ImageSourcePropType;
   iconStyle?: ImageStyle;
+  action?: () => void;
 };
 
 const ButtonComponent = (props: ButtonComponentProps) => {
   return (
-    <View style={{ ...style.container, ...props.style }}>
+    <TouchableOpacity
+      onPress={props.action}
+      style={{ ...style.container, ...props.style }}
+    >
       {props.frontIcon && (
         <Image
           source={props.frontIcon}
@@ -34,29 +38,26 @@ const ButtonComponent = (props: ButtonComponentProps) => {
           style={{ ...style.icon, ...props.iconStyle }}
         />
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 const style = StyleSheet.create({
   container: {
     backgroundColor: COLORS.black,
-    marginHorizontal: 20,
-    marginVertical: 10,
+    gap: 10,
     borderRadius: 5,
     height: 40,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
   },
   text: {
     fontSize: 16,
-    flex: 1,
-    marginHorizontal: 20,
     color: COLORS.white,
   },
   icon: {
     width: 20,
     height: 20,
-    marginHorizontal: 20,
     tintColor: COLORS.white,
   },
 });
