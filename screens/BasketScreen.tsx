@@ -8,18 +8,18 @@ import {
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import { COLORS } from "../constants";
+import { COLORS, STYLES } from "../constants";
 import ButtonComponent from "../components/common/ButtonComponent";
 import useCart from "../hooks/useCart";
 import { Product } from "./ProductsScreen";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import QuantityButton from "../components/common/QuantityButton";
 
 const BasketScreen = () => {
   const { cartItems, removeFromCart } = useCart();
   const [totalItems, setTotalItems] = useState<number>();
   const [totalPrice, setTotalPrice] = useState<number>();
-
   const navigation = useNavigation();
 
   const getTotals = () => {
@@ -45,20 +45,30 @@ const BasketScreen = () => {
           source={{ uri: item.thumbnail }}
           style={style.imageBackground}
         >
-          <View style={style.deleteContainer}>
-            <TouchableOpacity onPress={() => removeFromCart(item.id)}>
+          <View
+            style={{
+              justifyContent: "space-between",
+              flex: 1,
+            }}
+          >
+            <TouchableOpacity
+              style={style.deleteContainer}
+              onPress={() => removeFromCart(item.id)}
+            >
               <Image
                 source={require("../assets/icon_delete.png")}
                 style={style.iconDelete}
               />
             </TouchableOpacity>
+            <View>
+              <QuantityButton styles={{ marginBottom: 10, marginLeft: 10 }} />
+            </View>
           </View>
         </ImageBackground>
         <View style={style.textContainer}>
           <View style={{ flex: 1, alignContent: "center" }}>
             <Text style={style.textTitle}>{item.title}</Text>
             <Text style={style.description}>{item.brand}</Text>
-            <Text style={style.description}>Quantity: {item?.quantity}</Text>
           </View>
           <Text style={style.price}>${item.price}</Text>
         </View>
@@ -124,7 +134,6 @@ const style = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 20,
     marginBottom: 20,
-    shadowColor: "#000",
   },
   deleteContainer: {
     backgroundColor: COLORS.black,
@@ -139,6 +148,7 @@ const style = StyleSheet.create({
   imageBackground: {
     height: 150,
     overflow: "hidden",
+    backgroundColor: "blue",
     borderRadius: 10,
   },
   textContainer: {
@@ -158,16 +168,14 @@ const style = StyleSheet.create({
     fontSize: 24,
   },
   textTitle: {
-    marginHorizontal: 20,
     fontWeight: "600",
     marginTop: 5,
     fontSize: 20,
     color: COLORS.black,
   },
   description: {
-    marginHorizontal: 20,
     marginBottom: 10,
-    color: COLORS.grayLight,
+    ...STYLES.textSecondary,
   },
   price: {
     fontSize: 20,
