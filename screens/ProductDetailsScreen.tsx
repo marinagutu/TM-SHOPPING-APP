@@ -14,6 +14,7 @@ import { HomeStackParamList } from "../navigation/TabNavigator";
 import QuantityButton from "../components/common/QuantityButton";
 import Field from "../components/common/Field";
 import ButtonComponent from "../components/common/ButtonComponent";
+import Toast from "react-native-toast-message";
 import useCart from "../hooks/useCart";
 
 const ProductDetailsScreen = () => {
@@ -33,7 +34,6 @@ const ProductDetailsScreen = () => {
   function updateQuantity(change: number) {
     // Calculate the new quantity based on the change
     const newQuantity = quantity + change;
-
     // Check if the new quantity is within the allowed range
     if (newQuantity >= 1 && newQuantity <= parseInt(product.stock)) {
       setQuantity(newQuantity); // Update the quantity
@@ -45,7 +45,7 @@ const ProductDetailsScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ImageBackground
         resizeMode="stretch"
         source={{ uri: product?.thumbnail }}
@@ -107,6 +107,7 @@ const ProductDetailsScreen = () => {
           />
         </View>
       </View>
+      <Toast position="bottom" bottomOffset={20}></Toast>
     </SafeAreaView>
   );
 };

@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Product } from "../screens/ProductsScreen";
 import { useEffect, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
+import Toast from "react-native-toast-message";
 
 const useCart = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
@@ -33,12 +34,19 @@ const useCart = () => {
         cart.push(item);
       }
 
-      console.log("triggered", cart);
-
       await AsyncStorage.setItem("cart", JSON.stringify(cart));
-      console.log("Item added to cart:", item);
+
+      Toast.show({
+        type: "success",
+        text1: "Product added to basket successfully",
+      });
+
+      console.log("AR TREBUI SA APARA CEVA");
     } catch (error) {
-      console.error("Error adding item to cart:", error);
+      Toast.show({
+        type: "error",
+        text1: "Something went wrong. Try again",
+      });
     }
   };
   const removeFromCart = async (itemId: number, quantity: number = 1) => {

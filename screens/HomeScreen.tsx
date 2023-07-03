@@ -9,47 +9,42 @@ import {
 } from "react-native";
 import useFetch from "../hooks/useFetch";
 import { StyleSheet } from "react-native";
-import { COLORS } from "../constants";
+import { COLORS, STYLES } from "../constants";
 import { HomeStackParamList } from "../navigation/TabNavigator";
 
 const HomeScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   const { data, isLoading, error } = useFetch<string[]>({
     endpoint: "products/categories",
   });
-
 
   const renderItem = ({ item }: { item: string }) => {
     return (
       <TouchableOpacity
         style={{ marginVertical: 5 }}
         onPress={() =>
-          navigation.navigate("ProductsScreen",{
-              category: item,
-            },
-          )
+          navigation.navigate("ProductsScreen", {
+            category: item,
+          })
         }
       >
         <View style={styles.container}>
           <Text style={styles.text}>{item}</Text>
 
-          <View
-            style={{
-              height: 30,
-              backgroundColor: "white",
-              borderRadius: 100,
-              width: 30,
-            }}
-          ></View>
+          <View style={styles.dot} />
         </View>
       </TouchableOpacity>
     );
   };
 
   return (
-    <SafeAreaView>
-      {data && <FlatList data={data} renderItem={renderItem} />}
+    <SafeAreaView style={{ backgroundColor: "white" }}>
+      <View style={{ marginHorizontal: 30, backgroundColor: "white" }}>
+        <Text style={styles.title}>Categories</Text>
+        {data && <FlatList data={data} renderItem={renderItem} />}
+      </View>
     </SafeAreaView>
   );
 };
@@ -58,7 +53,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
     height: 60,
-    marginHorizontal: 30,
     borderRadius: 30,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -72,8 +66,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
     marginTop: 0,
-    paddingHorizontal: 15,
     alignItems: "center",
+  },
+  title: {
+    ...STYLES.textPrimary,
+    marginVertical: 10,
+  },
+
+  dot: {
+    height: 30,
+    backgroundColor: "white",
+    borderRadius: 100,
+    width: 30,
   },
 
   text: {

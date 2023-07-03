@@ -33,14 +33,14 @@ const HomeStack = () => {
       <Stack.Screen
         name="ProductsScreen"
         component={ProductsScreen}
-        options={{ title: " " }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="ProductDetailsScreen"
         component={ProductDetailsScreen}
         options={{
           title: " ",
-          presentation: "fullScreenModal",
+
           headerShown: false,
         }}
       />

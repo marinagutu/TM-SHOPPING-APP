@@ -13,6 +13,7 @@ import useFetch from "../hooks/useFetch";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";
 import ErrorComponent from "../components/common/ErrorComponent";
+import BackIcon from "../components/common/BackIcon";
 import Loading from "../components/common/Loading";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -70,7 +71,7 @@ const ProductsScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       {isLoading && <Loading />}
       {data?.products && (
-        <>
+        <View>
           <Text style={styles.screenTitle}>{params.category}</Text>
           <FlatList
             data={data?.products}
@@ -79,7 +80,7 @@ const ProductsScreen = () => {
             showsVerticalScrollIndicator={false}
             style={styles.list}
           />
-        </>
+        </View>
       )}
       {error && <ErrorComponent />}
     </SafeAreaView>
@@ -95,7 +96,7 @@ const styles = StyleSheet.create({
   screenTitle: {
     textTransform: "capitalize",
     fontWeight: "bold",
-    marginLeft: 15,
+    marginLeft: 25,
     marginTop: 5,
     fontSize: 20,
   },

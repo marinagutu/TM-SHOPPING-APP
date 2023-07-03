@@ -33,7 +33,7 @@ const BasketScreen = () => {
 
   useEffect(() => {
     getTotals();
-  }, []);
+  }, [cartItems]);
 
   const renderItem = ({ item }: { item: Product }) => {
     return (
@@ -55,7 +55,7 @@ const BasketScreen = () => {
           <View style={{ flex: 1, alignContent: "center" }}>
             <Text style={style.textTitle}>{item.title}</Text>
             <Text style={style.description}>{item.brand}</Text>
-            <Text>{item?.quantity}</Text>
+            <Text style={style.description}>Quantity: {item?.quantity}</Text>
           </View>
           <Text style={style.price}>${item.price}</Text>
         </View>
@@ -87,8 +87,12 @@ const BasketScreen = () => {
           marginVertical: 10,
         }}
       >
-        <Text style={style.textTotal}>{totalItems ? totalItems : ""}</Text>
-        <Text style={style.textPrice}>{totalPrice ? totalPrice : ""} </Text>
+        <Text style={style.textTotal}>
+          {totalItems ? `Products : ${totalItems}` : ""}
+        </Text>
+        <Text style={style.textPrice}>
+          {totalPrice ? `Total: $${totalPrice}` : ""}{" "}
+        </Text>
       </View>
 
       <ButtonComponent
@@ -110,6 +114,7 @@ const BasketScreen = () => {
 const style = StyleSheet.create({
   safeArea: {
     flex: 1,
+    backgroundColor: COLORS.white,
   },
   container: {
     borderRadius: 20,
