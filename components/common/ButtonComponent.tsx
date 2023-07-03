@@ -7,6 +7,7 @@ import {
   ImageSourcePropType,
   ImageStyle,
   TouchableOpacity,
+  TextStyle,
 } from "react-native";
 import { COLORS } from "../../constants";
 
@@ -16,6 +17,7 @@ type ButtonComponentProps = {
   frontIcon?: ImageSourcePropType;
   trailingIcon?: ImageSourcePropType;
   iconStyle?: ImageStyle;
+  textStyle?: TextStyle;
   action?: () => void;
 };
 
@@ -31,7 +33,7 @@ const ButtonComponent = (props: ButtonComponentProps) => {
           style={{ ...style.icon, ...props.iconStyle }}
         />
       )}
-      <Text style={style.text}>{props.title}</Text>
+      <Text style={{ ...style.text, ...props.textStyle }}>{props.title}</Text>
       {props.trailingIcon && (
         <Image
           source={props.trailingIcon}
