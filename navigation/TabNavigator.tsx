@@ -5,6 +5,7 @@ import BasketScreen from "../screens/BasketScreen";
 import Icon from "../components/common/Icon";
 import { StyleSheet } from "react-native";
 import { Product } from "../screens/ProductsScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
 import ProductsScreen from "../screens/ProductsScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 
@@ -40,7 +41,26 @@ const HomeStack = () => {
         component={ProductDetailsScreen}
         options={{
           title: " ",
+          headerShown: false,
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
+const BasketStack = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="BasketScreen"
+        component={BasketScreen}
+        options={{ title: "" }}
+      />
+      <Stack.Screen
+        name="CheckoutScreen"
+        component={CheckoutScreen}
+        options={{
+          title: " ",
           headerShown: false,
         }}
       />
@@ -68,7 +88,7 @@ const TabNavigator = () => {
       />
       <Tab.Screen
         name="Basket"
-        component={BasketScreen}
+        component={BasketStack}
         options={{
           tabBarIcon: BasketIcon,
         }}

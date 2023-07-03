@@ -13,11 +13,14 @@ import ButtonComponent from "../components/common/ButtonComponent";
 import useCart from "../hooks/useCart";
 import { Product } from "./ProductsScreen";
 import { useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const BasketScreen = () => {
   const { cartItems, removeFromCart } = useCart();
   const [totalItems, setTotalItems] = useState<number>();
   const [totalPrice, setTotalPrice] = useState<number>();
+
+  const navigation = useNavigation();
 
   const getTotals = () => {
     let price: number = 0;
@@ -106,6 +109,7 @@ const BasketScreen = () => {
             },
           ],
         }}
+        action={() => navigation.navigate("CheckoutScreen")}
       />
     </SafeAreaView>
   );
@@ -120,11 +124,7 @@ const style = StyleSheet.create({
     borderRadius: 20,
     marginHorizontal: 20,
     marginBottom: 20,
-    backgroundColor: "black",
     shadowColor: "#000",
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    elevation: 5,
   },
   deleteContainer: {
     backgroundColor: COLORS.black,
@@ -139,8 +139,7 @@ const style = StyleSheet.create({
   imageBackground: {
     height: 150,
     overflow: "hidden",
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+    borderRadius: 10,
   },
   textContainer: {
     flexDirection: "row",
@@ -163,12 +162,12 @@ const style = StyleSheet.create({
     fontWeight: "600",
     marginTop: 5,
     fontSize: 20,
-    color: COLORS.white,
+    color: COLORS.black,
   },
   description: {
     marginHorizontal: 20,
     marginBottom: 10,
-    color: COLORS.white,
+    color: COLORS.grayLight,
   },
   price: {
     fontSize: 20,
