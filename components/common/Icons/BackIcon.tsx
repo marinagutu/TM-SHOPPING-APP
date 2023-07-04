@@ -1,7 +1,7 @@
 import Icon from "./Icon";
 import { ImageStyle, TouchableOpacity, ViewStyle } from "react-native";
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../constants";
+import { COLORS } from "../../../constants";
 
 type BackIconProps = {
   hasBackground?: boolean;
@@ -22,7 +22,7 @@ const BackIcon = ({
       style={hasBackground && { ...styles.container, ...containerStyle }}
     >
       <Icon
-        source={require("../../assets/icon_back.png")}
+        source={require("../../../assets/icon_back.png")}
         style={{ ...iconStyle, ...styles.icon }}
       />
     </TouchableOpacity>

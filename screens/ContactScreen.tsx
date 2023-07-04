@@ -8,7 +8,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import BackIcon from "../components/common/BackIcon";
+import BackIcon from "../components/common/Icons/BackIcon";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../constants";
 import { Toast } from "react-native-toast-message/lib/src/Toast";

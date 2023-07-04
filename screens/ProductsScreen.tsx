@@ -13,7 +13,7 @@ import useFetch from "../hooks/useFetch";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";
 import ErrorComponent from "../components/common/ErrorComponent";
-import BackIcon from "../components/common/BackIcon";
+import BackIcon from "../components/common/Icons/BackIcon";
 import Loading from "../components/common/Loading";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 

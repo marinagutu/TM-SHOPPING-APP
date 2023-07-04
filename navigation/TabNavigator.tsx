@@ -2,8 +2,8 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import BasketScreen from "../screens/BasketScreen";
-import Icon from "../components/common/Icon";
-import { StyleSheet } from "react-native";
+import HomeIcon from "../components/common/Icons/HomeIcon";
+import BasketIcon from "../components/common/Icons/BasketIcon";
 import { Product } from "../screens/ProductsScreen";
 import ContactScreen, { ContactForm } from "../screens/ContactScreen";
 import ProductsScreen from "../screens/ProductsScreen";
@@ -56,14 +56,6 @@ const BasketStack = () => {
   );
 };
 
-const HomeIcon = () => (
-  <Icon source={require("../assets/icon_home.png")} style={style.icon} />
-);
-
-const BasketIcon = () => (
-  <Icon source={require("../assets/icon_shopping.png")} style={style.icon} />
-);
-
 const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -84,12 +76,5 @@ const TabNavigator = () => {
     </Tab.Navigator>
   );
 };
-
-const style = StyleSheet.create({
-  icon: {
-    width: 24,
-    height: 24,
-  },
-});
 
 export default TabNavigator;

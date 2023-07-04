@@ -5,7 +5,7 @@ import Field from "../components/common/Field";
 import { Product } from "./ProductsScreen";
 import { CommonActions } from "@react-navigation/native";
 
-import BackIcon from "../components/common/BackIcon";
+import BackIcon from "../components/common/Icons/BackIcon";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import useCart from "../hooks/useCart";
 import { BasketStackParamList } from "../navigation/TabNavigator";

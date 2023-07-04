@@ -16,7 +16,7 @@ import Field from "../components/common/Field";
 import ButtonComponent from "../components/common/ButtonComponent";
 import Toast from "react-native-toast-message";
 import useCart from "../hooks/useCart";
-import BackIcon from "../components/common/BackIcon";
+import BackIcon from "../components/common/Icons/BackIcon";
 
 const ProductDetailsScreen = () => {
   type ProductScreenProps = RouteProp<

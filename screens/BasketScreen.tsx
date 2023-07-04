@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import QuantityButton from "../components/common/QuantityButton";
 import { BasketStackParamList } from "../navigation/TabNavigator";
-import BackIcon from "../components/common/BackIcon";
+import BackIcon from "../components/common/Icons/BackIcon";
 
 const BasketScreen = () => {
   const { cartItems, removeFromCart, addToCart } = useCart();
