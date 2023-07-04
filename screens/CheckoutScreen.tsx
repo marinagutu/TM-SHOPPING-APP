@@ -10,13 +10,14 @@ import { BasketStackParamList } from "../navigation/TabNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import ButtonComponent from "../components/common/ButtonComponent";
 import CustomModal from "../components/common/CustomModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const CheckoutScreen = () => {
   type CheckoutScreenProps = RouteProp<BasketStackParamList, "CheckoutScreen">;
   const params = useRoute<CheckoutScreenProps>().params;
   const { cartItems, clearCart } = useCart();
   const [open, setIsOpen] = useState<boolean>(false);
+  const [totalPrice, setTotalPrice] = useState<number>();
 
   const submitOrder = () => {
     clearCart();
@@ -27,6 +28,22 @@ const CheckoutScreen = () => {
     setIsOpen(false);
     navigation.navigate("BasketScreen");
   };
+
+  const getTotals = () => {
+    let price: number = 0;
+
+    cartItems?.forEach((item) => {
+      if (item.quantity) {
+        price = price + item.price * item.quantity;
+      }
+    });
+
+    setTotalPrice(price);
+  };
+
+  useEffect(() => {
+    getTotals();
+  }, [cartItems]);
 
   const navigation =
     useNavigation<NativeStackNavigationProp<BasketStackParamList>>();
@@ -55,11 +72,21 @@ const CheckoutScreen = () => {
       />
       <Text style={styles.title}>Delivery Address</Text>
       <View style={styles.addressCard}>
-        <Text>Full Name: {params.name}</Text>
-        <Text>Phone Number: {params.phone}</Text>
-        <Text>Email: {params.email}</Text>
-        <Text>City : {params.city} </Text>
-        <Text>Address: {params.address} </Text>
+        <Text>
+          Full Name: <Text style={styles.highlight}>{params.name}</Text>
+        </Text>
+        <Text>
+          Phone Number: <Text style={styles.highlight}>{params.phone}</Text>
+        </Text>
+        <Text>
+          Email: <Text style={styles.highlight}>{params.email}</Text>
+        </Text>
+        <Text>
+          City : <Text style={styles.highlight}>{params.city}</Text>
+        </Text>
+        <Text>
+          Address : <Text style={styles.highlight}>{params.address}</Text>
+        </Text>
       </View>
       <FlatList
         data={cartItems}
@@ -75,7 +102,7 @@ const CheckoutScreen = () => {
         <Field
           title={"Total Price"}
           titleStyle={STYLES.textSecondary}
-          description={`$${100}`}
+          description={`$${totalPrice}`}
           descriptionStyle={STYLES.textPrimary}
         />
         <ButtonComponent
@@ -129,6 +156,9 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     ...STYLES.textPrimary,
+  },
+  highlight: {
+    fontWeight: "bold",
   },
   textDescription: {
     ...STYLES.textSecondary,

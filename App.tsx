@@ -1,11 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet, Text, View } from "react-native";
+import { StatusBar } from "react-native";
 import RootNavigator from "./navigation/RootNavigator";
 
 export default function App() {
   return (
     <NavigationContainer>
-      <RootNavigator />
+      <View style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+        <RootNavigator />
+      </View>
     </NavigationContainer>
   );
 }

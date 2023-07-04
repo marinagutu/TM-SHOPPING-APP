@@ -107,3 +107,49 @@ orderButton: { borderRadius: 20, width: "50%", alignSelf: "center" },
 });
 
 # 3 Contact screen styles
+
+const styles = StyleSheet.create({
+cancelButton: {
+width: 80,
+backgroundColor: COLORS.white,
+},
+confirmButton: {
+width: 100,
+},
+title: {
+marginVertical: 10,
+marginHorizontal: 20,
+fontWeight: "bold",
+fontSize: 22,
+},
+safeArea: {
+backgroundColor: COLORS.white,
+flex: 1,
+},
+textInput: {
+backgroundColor: COLORS.white,
+marginHorizontal: 20,
+marginVertical: 5,
+paddingHorizontal: 10,
+paddingVertical: 15,
+borderRadius: 10,
+borderWidth: 1,
+borderColor: COLORS.grayLight,
+},
+image: {
+width: "90%",
+height: 180,
+marginHorizontal: 20,
+marginBottom: 10,
+borderRadius: 10,
+resizeMode: "contain",
+},
+buttonContainer: {
+flexDirection: "row",
+justifyContent: "space-between",
+marginHorizontal: 20,
+marginVertical: 20,
+flex: 1,
+alignItems: "flex-end",
+},
+});
