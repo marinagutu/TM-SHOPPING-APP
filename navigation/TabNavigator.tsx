@@ -17,6 +17,7 @@ export type TabStackPramsList = {
 
 export type BasketStackParamList = {
   HomeScreen: undefined;
+  BasketScreen: undefined;
   ContactScreen: undefined;
   CheckoutScreen: ContactForm;
   ProductDetailsScreen: { product: Product };

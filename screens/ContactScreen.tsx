@@ -11,6 +11,7 @@ import {
 import BackIcon from "../components/common/BackIcon";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../constants";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { BasketStackParamList } from "../navigation/TabNavigator";
 import ButtonComponent from "../components/common/ButtonComponent";
 import { useState } from "react";
@@ -48,8 +49,12 @@ const ContactScreen = () => {
     );
 
     if (isFormValid) {
+      navigation.navigate("CheckoutScreen", values);
     } else {
-      console.log("Please fill in all the fields");
+      Toast.show({
+        type: "error",
+        text1: "Please fill in all the fields",
+      });
     }
   };
 
@@ -108,11 +113,12 @@ const ContactScreen = () => {
           />
           <ButtonComponent
             title={"Confirm"}
-            action={() => navigation.navigate("CheckoutScreen", values)}
+            action={handleConfirm}
             style={styles.confirmButton}
             textStyle={{ fontWeight: "700" }}
           />
         </View>
+        <Toast position="bottom" />
       </ScrollView>
     </SafeAreaView>
   );

@@ -59,7 +59,7 @@ const ProductsScreen = () => {
             {item.title}
           </Text>
           <Text style={styles.textDescription} numberOfLines={2}>
-            {item.description}
+            {item.brand}
           </Text>
           <Text style={styles.textPrice}>${item.price}</Text>
         </View>
@@ -124,8 +124,7 @@ const styles = StyleSheet.create({
     textAlign: "justify",
   },
   textPrice: {
-    fontSize: 16,
-    fontWeight: "900",
+    ...STYLES.textPrimary,
     marginBottom: 20,
   },
   indicator: {

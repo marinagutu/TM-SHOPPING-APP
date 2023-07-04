@@ -6,16 +6,23 @@ import Toast from "react-native-toast-message";
 
 const useCart = () => {
   const [cartItems, setCartItems] = useState<Product[]>([]);
+  const [loading, setIsLoading] = useState<boolean>();
+  const [error, setError] = useState<string>();
 
   const isFocused = useIsFocused();
 
   const getCart = async () => {
     try {
+      setIsLoading(true);
       const cart = await AsyncStorage.getItem("cart");
       const products = cart ? JSON.parse(cart) : [];
+      setIsLoading(false);
       setCartItems(products);
     } catch (error) {
-      console.error("Error retrieving cart from local storage:", error);
+      // console.error("Error retrieving cart from local storage:", error);
+      setError(error as string);
+      setIsLoading(false);
+
       return [];
     }
   };
@@ -41,8 +48,6 @@ const useCart = () => {
         type: "success",
         text1: "Product added to basket successfully",
       });
-
-      console.log("AR TREBUI SA APARA CEVA");
     } catch (error) {
       Toast.show({
         type: "error",
@@ -58,7 +63,6 @@ const useCart = () => {
       const itemIndex = updatedCartItems.findIndex(
         (item: Product) => item.id === itemId
       );
-
       if (itemIndex !== -1) {
         const existingItem = updatedCartItems[itemIndex];
         existingItem.quantity! -= quantity;
@@ -76,11 +80,27 @@ const useCart = () => {
     }
   };
 
+  const clearCart = async () => {
+    try {
+      await AsyncStorage.removeItem("cart");
+      setCartItems([]); // Assuming you have a state setter for cartItems
+      Toast.show({
+        type: "success",
+        text1: "Basket cleared successfully",
+      });
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Something went wrong. Try again",
+      });
+    }
+  };
+
   useEffect(() => {
     getCart();
   }, [isFocused]);
 
-  return { addToCart, removeFromCart, cartItems };
+  return { addToCart, removeFromCart, clearCart, cartItems, error, loading };
 };
 
 export default useCart;
