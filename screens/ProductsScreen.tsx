@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { COLORS, STYLES } from "../constants";
+import { STYLES } from "../constants";
 import useFetch from "../hooks/useFetch";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";

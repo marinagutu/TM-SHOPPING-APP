@@ -3,8 +3,6 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { STYLES, COLORS } from "../constants";
 import Field from "../components/common/Field";
 import { Product } from "./ProductsScreen";
-import { CommonActions } from "@react-navigation/native";
-
 import BackIcon from "../components/common/Icons/BackIcon";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import useCart from "../hooks/useCart";
@@ -18,7 +16,6 @@ const CheckoutScreen = () => {
   type CheckoutScreenProps = RouteProp<BasketStackParamList, "CheckoutScreen">;
   const params = useRoute<CheckoutScreenProps>().params;
   const { cartItems, clearCart } = useCart();
-
   const [open, setIsOpen] = useState<boolean>(false);
 
   const submitOrder = () => {
