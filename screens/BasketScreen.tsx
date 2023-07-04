@@ -31,8 +31,10 @@ const BasketScreen = () => {
     let price: number = 0;
     let itemQuantities: number = 0;
     cartItems?.forEach((item) => {
-      price = price + item.price * item.quantity!;
-      itemQuantities = itemQuantities + item?.quantity!;
+      if (item.quantity) {
+        price = price + item.price * item.quantity;
+        itemQuantities = itemQuantities + item?.quantity;
+      }
     });
 
     setTotalPrice(price);
@@ -63,7 +65,11 @@ const BasketScreen = () => {
               flex: 1,
             }}
           >
-            <DeleteIcon hasBackground containerStyle={styles.deleteIcon} />
+            <DeleteIcon
+              action={() => removeFromCart(item.id, item.quantity)}
+              hasBackground
+              containerStyle={styles.deleteIcon}
+            />
             <View>
               <QuantityButton
                 quantity={item.quantity}

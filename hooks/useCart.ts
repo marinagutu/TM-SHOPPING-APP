@@ -34,8 +34,8 @@ const useCart = () => {
         (cartItem: Product) => cartItem.id === item.id
       );
 
-      if (existingItem) {
-        existingItem.quantity! += quantity;
+      if (existingItem?.quantity) {
+        existingItem.quantity += quantity;
       } else {
         item.quantity = quantity;
         cart.push(item);
@@ -65,10 +65,13 @@ const useCart = () => {
       );
       if (itemIndex !== -1) {
         const existingItem = updatedCartItems[itemIndex];
-        existingItem.quantity! -= quantity;
 
-        if (existingItem.quantity! <= 0) {
-          updatedCartItems.splice(itemIndex, 1);
+        if (existingItem.quantity) {
+          existingItem.quantity -= quantity;
+
+          if (existingItem.quantity <= 0) {
+            updatedCartItems.splice(itemIndex, 1);
+          }
         }
       }
 
