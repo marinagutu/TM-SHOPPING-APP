@@ -16,7 +16,7 @@ const HomeScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
-  const { data, isLoading, error } = useFetch<string[]>({
+  const { data } = useFetch<string[]>({
     endpoint: "products/categories",
   });
 
@@ -32,7 +32,6 @@ const HomeScreen = () => {
       >
         <View style={styles.container}>
           <Text style={styles.text}>{item}</Text>
-
           <View style={styles.dot} />
         </View>
       </TouchableOpacity>
@@ -40,18 +39,28 @@ const HomeScreen = () => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "white" }}>
+    <SafeAreaView style={styles.safeArea}>
       <View style={{ marginHorizontal: 30, backgroundColor: "white" }}>
         <Text style={styles.title}>Categories</Text>
-        {data && <FlatList data={data} renderItem={renderItem} />}
+        {data && (
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            data={data}
+            renderItem={renderItem}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    ...STYLES.mainScreen,
+  },
+
   container: {
-    backgroundColor: "black",
+    backgroundColor: COLORS.black,
     height: 60,
     borderRadius: 30,
     flexDirection: "row",
@@ -75,7 +84,7 @@ const styles = StyleSheet.create({
 
   dot: {
     height: 30,
-    backgroundColor: "white",
+    backgroundColor: COLORS.white,
     borderRadius: 100,
     width: 30,
   },

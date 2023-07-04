@@ -22,7 +22,7 @@ const useCart = () => {
 
   const addToCart = async (item: Product, quantity: number) => {
     try {
-      const cart: Product[] = cartItems;
+      const cart: Product[] = [...cartItems];
       const existingItem = cart.find(
         (cartItem: Product) => cartItem.id === item.id
       );
@@ -35,6 +35,7 @@ const useCart = () => {
       }
 
       await AsyncStorage.setItem("cart", JSON.stringify(cart));
+      setCartItems(cart); // Update the state with the new cart items
 
       Toast.show({
         type: "success",
@@ -49,6 +50,7 @@ const useCart = () => {
       });
     }
   };
+
   const removeFromCart = async (itemId: number, quantity: number = 1) => {
     try {
       const updatedCartItems = [...cartItems]; // Create a new array

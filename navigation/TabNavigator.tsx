@@ -5,17 +5,26 @@ import BasketScreen from "../screens/BasketScreen";
 import Icon from "../components/common/Icon";
 import { StyleSheet } from "react-native";
 import { Product } from "../screens/ProductsScreen";
-import CheckoutScreen from "../screens/CheckoutScreen";
+import ContactScreen, { ContactForm } from "../screens/ContactScreen";
 import ProductsScreen from "../screens/ProductsScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
+import CheckoutScreen from "../screens/CheckoutScreen";
 
 export type TabStackPramsList = {
   Home: undefined;
   Basket: undefined;
 };
 
+export type BasketStackParamList = {
+  HomeScreen: undefined;
+  ContactScreen: undefined;
+  CheckoutScreen: ContactForm;
+  ProductDetailsScreen: { product: Product };
+};
+
 export type HomeStackParamList = {
   HomeScreen: undefined;
+  BasketScreen: undefined;
   ProductsScreen: { category: string };
   ProductDetailsScreen: { product: Product };
 };
@@ -25,24 +34,12 @@ const Stack = createNativeStackNavigator();
 
 const HomeStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="HomeScreen"
-        component={HomeScreen}
-        options={{ title: " " }}
-      />
-      <Stack.Screen
-        name="ProductsScreen"
-        component={ProductsScreen}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="HomeScreen" component={HomeScreen} />
+      <Stack.Screen name="ProductsScreen" component={ProductsScreen} />
       <Stack.Screen
         name="ProductDetailsScreen"
         component={ProductDetailsScreen}
-        options={{
-          title: " ",
-          headerShown: false,
-        }}
       />
     </Stack.Navigator>
   );
@@ -50,20 +47,10 @@ const HomeStack = () => {
 
 const BasketStack = () => {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="BasketScreen"
-        component={BasketScreen}
-        options={{ title: "" }}
-      />
-      <Stack.Screen
-        name="CheckoutScreen"
-        component={CheckoutScreen}
-        options={{
-          title: " ",
-          headerShown: false,
-        }}
-      />
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="BasketScreen" component={BasketScreen} />
+      <Stack.Screen name="ContactScreen" component={ContactScreen} />
+      <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
     </Stack.Navigator>
   );
 };

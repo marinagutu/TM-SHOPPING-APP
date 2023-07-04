@@ -8,7 +8,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { COLORS } from "../constants";
+import { COLORS, STYLES } from "../constants";
 import useFetch from "../hooks/useFetch";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/TabNavigator";
@@ -54,7 +54,7 @@ const ProductsScreen = () => {
         }
       >
         <Image source={{ uri: item.thumbnail }} style={styles.image} />
-        <View style={{ marginHorizontal: 10, alignItems: "center" }}>
+        <View style={styles.textContainer}>
           <Text style={styles.textTitle} numberOfLines={1}>
             {item.title}
           </Text>
@@ -72,13 +72,19 @@ const ProductsScreen = () => {
       {isLoading && <Loading />}
       {data?.products && (
         <View>
-          <Text style={styles.screenTitle}>{params.category}</Text>
+          <View style={{ marginTop: 15, marginLeft: 25, gap: 15 }}>
+            <BackIcon
+              hasBackground
+              containerStyle={{}}
+              action={() => navigation.goBack()}
+            />
+            <Text style={styles.screenTitle}>{params.category}</Text>
+          </View>
           <FlatList
             data={data?.products}
             renderItem={renderItem}
             numColumns={2}
             showsVerticalScrollIndicator={false}
-            style={styles.list}
           />
         </View>
       )}
@@ -89,19 +95,11 @@ const ProductsScreen = () => {
 
 const styles = StyleSheet.create({
   safeArea: {
-    backgroundColor: COLORS.white,
-    justifyContent: "center",
-    flex: 1,
+    ...STYLES.mainScreen,
   },
   screenTitle: {
-    textTransform: "capitalize",
-    fontWeight: "bold",
-    marginLeft: 25,
-    marginTop: 5,
-    fontSize: 20,
-  },
-  list: {
-    padding: 20,
+    ...STYLES.textPrimary,
+    marginBottom: 10,
   },
   container: {
     width: "50%",
@@ -116,16 +114,14 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 10,
   },
+  textContainer: { marginHorizontal: 10, alignItems: "center" },
   textTitle: {
-    fontSize: 18,
-    fontWeight: "800",
+    ...STYLES.textPrimary,
     marginTop: 5,
   },
   textDescription: {
-    color: COLORS.graySecondary,
-    marginVertical: 5,
+    ...STYLES.textSecondary,
     textAlign: "justify",
-    fontSize: 14,
   },
   textPrice: {
     fontSize: 16,

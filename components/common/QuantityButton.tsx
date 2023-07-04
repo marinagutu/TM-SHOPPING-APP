@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.grayLight,
     borderRadius: 20,
     justifyContent: "center",
-    width: 100,
-    height: 40,
+    width: 90,
+    height: 30,
     alignItems: "center",
   },
   text: {

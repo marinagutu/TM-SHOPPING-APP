@@ -16,6 +16,7 @@ import Field from "../components/common/Field";
 import ButtonComponent from "../components/common/ButtonComponent";
 import Toast from "react-native-toast-message";
 import useCart from "../hooks/useCart";
+import BackIcon from "../components/common/BackIcon";
 
 const ProductDetailsScreen = () => {
   type ProductScreenProps = RouteProp<
@@ -45,20 +46,17 @@ const ProductDetailsScreen = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={styles.safeArea}>
       <ImageBackground
         resizeMode="stretch"
         source={{ uri: product?.thumbnail }}
         style={{ flex: 0.4 }}
       >
-        <TouchableOpacity onPress={goBack}>
-          <View style={styles.iconWrapper}>
-            <Image
-              source={require("../assets/icon_back.png")}
-              style={styles.backIcon}
-            />
-          </View>
-        </TouchableOpacity>
+        <BackIcon
+          hasBackground
+          containerStyle={{ marginLeft: 15, marginTop: 15 }}
+          action={goBack}
+        />
       </ImageBackground>
       <View style={styles.detailsCard}>
         <View
@@ -68,7 +66,11 @@ const ProductDetailsScreen = () => {
           }}
         >
           <View id="first">
-            <Field title={product?.title} description={product?.category} />
+            <Field
+              title={product?.title}
+              description={product?.category}
+              titleStyle={{ width: "85%" }}
+            />
             <View style={styles.reviewsWrapper}>
               <Image
                 source={require("../assets/icon_rating.png")}
@@ -77,11 +79,12 @@ const ProductDetailsScreen = () => {
               <Text>{product?.rating} (Reviews Score)</Text>
             </View>
           </View>
-          <View id="second">
+          <View id="second" style={{ marginRight: 0 }}>
             <QuantityButton
               leftAction={() => updateQuantity(-1)}
               rightAction={() => updateQuantity(+1)}
               quantity={quantity}
+              styles={styles.quantityButton}
             />
             <Text style={styles.stockText}>Available in stock</Text>
           </View>
@@ -102,7 +105,7 @@ const ProductDetailsScreen = () => {
           <ButtonComponent
             action={() => addToCart(product, quantity)}
             title="Add to cart"
-            style={{ width: 150, borderRadius: 20, marginTop: 20 }}
+            style={styles.cartButton}
             frontIcon={require("../assets/icon_shopping.png")}
           />
         </View>
@@ -113,18 +116,9 @@ const ProductDetailsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "black",
-    height: 60,
-    marginHorizontal: 0,
-    borderRadius: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 0,
-    paddingHorizontal: 15,
-    alignItems: "center",
+  safeArea: {
+    ...STYLES.mainScreen,
   },
-
   backIcon: {
     tintColor: "white",
     height: 20,
@@ -139,6 +133,9 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
+  },
+  quantityButton: {
+    marginLeft: 27,
   },
   ratingIcon: {
     width: 35,
@@ -156,7 +153,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
   detailsCard: {
-    flex: 0.6,
+    flex: 0.7,
     backgroundColor: COLORS.white,
     marginTop: -20,
     borderTopEndRadius: 20,
@@ -165,8 +162,9 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5,
     paddingHorizontal: 20,
-    paddingTop: 20,
+    paddingVertical: 10,
   },
+  cartButton: { width: 150, borderRadius: 20, marginTop: 20 },
 });
 
 export default ProductDetailsScreen;

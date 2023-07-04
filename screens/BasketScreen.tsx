@@ -14,13 +14,17 @@ import useCart from "../hooks/useCart";
 import { Product } from "./ProductsScreen";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import QuantityButton from "../components/common/QuantityButton";
+import { BasketStackParamList } from "../navigation/TabNavigator";
+import BackIcon from "../components/common/BackIcon";
 
 const BasketScreen = () => {
-  const { cartItems, removeFromCart } = useCart();
+  const { cartItems, removeFromCart, addToCart } = useCart();
   const [totalItems, setTotalItems] = useState<number>();
   const [totalPrice, setTotalPrice] = useState<number>();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<BasketStackParamList>>();
 
   const getTotals = () => {
     let price: number = 0;
@@ -40,10 +44,17 @@ const BasketScreen = () => {
 
   const renderItem = ({ item }: { item: Product }) => {
     return (
-      <View style={style.container}>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ProductDetailsScreen", {
+            product: item,
+          })
+        }
+        style={styles.container}
+      >
         <ImageBackground
           source={{ uri: item.thumbnail }}
-          style={style.imageBackground}
+          style={styles.imageBackground}
         >
           <View
             style={{
@@ -52,58 +63,67 @@ const BasketScreen = () => {
             }}
           >
             <TouchableOpacity
-              style={style.deleteContainer}
+              style={styles.deleteContainer}
               onPress={() => removeFromCart(item.id)}
             >
               <Image
                 source={require("../assets/icon_delete.png")}
-                style={style.iconDelete}
+                style={styles.iconDelete}
               />
             </TouchableOpacity>
             <View>
-              <QuantityButton styles={{ marginBottom: 10, marginLeft: 10 }} />
+              <QuantityButton
+                quantity={item.quantity}
+                rightAction={() => addToCart(item, 1)}
+                leftAction={() => removeFromCart(item.id)}
+                styles={styles.quantityButton}
+              />
             </View>
           </View>
         </ImageBackground>
-        <View style={style.textContainer}>
+        <View style={styles.textContainer}>
           <View style={{ flex: 1, alignContent: "center" }}>
-            <Text style={style.textTitle}>{item.title}</Text>
-            <Text style={style.description}>{item.brand}</Text>
+            <Text style={styles.textTitle}>{item.title}</Text>
+            <Text style={styles.description}>{item.brand}</Text>
           </View>
-          <Text style={style.price}>${item.price}</Text>
+          <Text style={styles.price}>${item.price}</Text>
+          <Text
+            style={{
+              ...styles.textTitle,
+              alignSelf: "flex-start",
+              marginRight: 10,
+              fontWeight: "800",
+            }}
+          >
+            ${item.price * item.quantity!}
+          </Text>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
 
   if (!cartItems?.length)
     return (
-      <SafeAreaView
-        style={{
-          alignItems: "center",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
+      <SafeAreaView style={styles.emptySafeArea}>
         <Text>Your shopping cart is empty!</Text>
       </SafeAreaView>
     );
 
   return (
-    <SafeAreaView style={style.safeArea}>
-      <Text style={style.title}>My Cart</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <BackIcon
+        action={() => navigation.navigate("HomeScreen")}
+        hasBackground
+        containerStyle={{ marginLeft: 20, marginTop: 10 }}
+      />
+      <Text style={styles.title}>My Cart</Text>
       <FlatList data={cartItems} renderItem={renderItem} />
 
-      <View
-        style={{
-          flexDirection: "row",
-          marginVertical: 10,
-        }}
-      >
-        <Text style={style.textTotal}>
+      <View style={styles.totalPricesFlex}>
+        <Text style={styles.textTotal}>
           {totalItems ? `Products : ${totalItems}` : ""}
         </Text>
-        <Text style={style.textPrice}>
+        <Text style={styles.textPrice}>
           {totalPrice ? `Total: $${totalPrice}` : ""}{" "}
         </Text>
       </View>
@@ -111,7 +131,7 @@ const BasketScreen = () => {
       <ButtonComponent
         title="Proceed to Checkout"
         trailingIcon={require("../assets/icon_back.png")}
-        style={{ marginHorizontal: 20, marginVertical: 10 }}
+        style={styles.checkoutButton}
         iconStyle={{
           transform: [
             {
@@ -119,26 +139,32 @@ const BasketScreen = () => {
             },
           ],
         }}
-        action={() => navigation.navigate("CheckoutScreen")}
+        action={() => navigation.navigate("ContactScreen")}
       />
     </SafeAreaView>
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   safeArea: {
+    ...STYLES.mainScreen,
+  },
+  emptySafeArea: {
+    alignItems: "center",
     flex: 1,
-    backgroundColor: COLORS.white,
+    justifyContent: "center",
   },
   container: {
     borderRadius: 20,
     marginHorizontal: 20,
     marginBottom: 20,
   },
+  checkoutButton: { marginHorizontal: 20, marginVertical: 10 },
+  quantityButton: { marginBottom: 10, marginLeft: 10 },
   deleteContainer: {
     backgroundColor: COLORS.black,
-    width: 40,
-    height: 40,
+    width: 30,
+    height: 30,
     borderRadius: 20,
     justifyContent: "center",
     alignSelf: "flex-end",
@@ -146,9 +172,8 @@ const style = StyleSheet.create({
     marginTop: 10,
   },
   imageBackground: {
-    height: 150,
+    height: 100,
     overflow: "hidden",
-    backgroundColor: "blue",
     borderRadius: 10,
   },
   textContainer: {
@@ -162,10 +187,9 @@ const style = StyleSheet.create({
     alignSelf: "center",
   },
   title: {
-    marginHorizontal: 20,
-    paddingBottom: 20,
-    fontWeight: "400",
-    fontSize: 24,
+    ...STYLES.textPrimary,
+    marginLeft: 20,
+    marginVertical: 10,
   },
   textTitle: {
     fontWeight: "600",
@@ -195,6 +219,7 @@ const style = StyleSheet.create({
     fontWeight: "bold",
     marginHorizontal: 20,
   },
+  totalPricesFlex: { flexDirection: "row", marginVertical: 10 },
 });
 
 export default BasketScreen;

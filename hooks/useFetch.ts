@@ -6,11 +6,6 @@ type Request = {
   query?: Object;
 };
 
-interface TST {
-  method: string;
-  url: string;
-}
-
 const useFetch = <T>(request: Request) => {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(false);

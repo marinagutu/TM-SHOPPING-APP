@@ -38,6 +38,7 @@ export const STYLES = {
     fontSize: 14,
     textTransform: "capitalize" as textTransform,
   },
+  mainScreen: { flex: 1, backgroundColor: "white" },
 };
 
 type FontWeight =
