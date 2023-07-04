@@ -111,7 +111,6 @@ const BasketScreen = () => {
       />
       <Text style={styles.title}>My Cart</Text>
       <FlatList data={cartItems} renderItem={renderItem} />
-
       <View style={styles.totalPricesFlex}>
         <Text style={styles.textTotal}>
           {totalItems ? `Products : ${totalItems}` : ""}
@@ -123,15 +122,8 @@ const BasketScreen = () => {
 
       <ButtonComponent
         title="Proceed to Checkout"
-        trailingIcon={require("../assets/icon_back.png")}
+        trailingIcon={require("../assets/icon_right.png")}
         style={styles.checkoutButton}
-        iconStyle={{
-          transform: [
-            {
-              rotate: "180deg",
-            },
-          ],
-        }}
         action={() => navigation.navigate("ContactScreen")}
       />
     </SafeAreaView>
