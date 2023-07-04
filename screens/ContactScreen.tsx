@@ -152,33 +152,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.grayLight,
   },
-  container: {
-    backgroundColor: "black",
-    height: 60,
-    marginHorizontal: 30,
-    borderRadius: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 0,
-    paddingHorizontal: 15,
-    alignItems: "center",
-  },
-
-  category: {
-    flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginTop: 0,
-    paddingHorizontal: 15,
-    alignItems: "center",
-  },
-
-  text: {
-    color: COLORS.white,
-    textTransform: "capitalize",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   image: {
     width: "90%",
     height: 180,

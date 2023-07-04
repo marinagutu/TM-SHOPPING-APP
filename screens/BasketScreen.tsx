@@ -18,6 +18,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import QuantityButton from "../components/common/QuantityButton";
 import { BasketStackParamList } from "../navigation/TabNavigator";
 import BackIcon from "../components/common/Icons/BackIcon";
+import DeleteIcon from "../components/common/Icons/DeleteIcon";
 
 const BasketScreen = () => {
   const { cartItems, removeFromCart, addToCart } = useCart();
@@ -50,7 +51,7 @@ const BasketScreen = () => {
             product: item,
           })
         }
-        style={styles.container}
+        style={styles.productContainer}
       >
         <ImageBackground
           source={{ uri: item.thumbnail }}
@@ -62,15 +63,7 @@ const BasketScreen = () => {
               flex: 1,
             }}
           >
-            <TouchableOpacity
-              style={styles.deleteContainer}
-              onPress={() => removeFromCart(item.id)}
-            >
-              <Image
-                source={require("../assets/icon_delete.png")}
-                style={styles.iconDelete}
-              />
-            </TouchableOpacity>
+            <DeleteIcon hasBackground containerStyle={styles.deleteIcon} />
             <View>
               <QuantityButton
                 quantity={item.quantity}
@@ -154,23 +147,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  container: {
+  productContainer: {
     borderRadius: 20,
     marginHorizontal: 20,
     marginBottom: 20,
   },
   checkoutButton: { marginHorizontal: 20, marginVertical: 10 },
   quantityButton: { marginBottom: 10, marginLeft: 10 },
-  deleteContainer: {
-    backgroundColor: COLORS.black,
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignSelf: "flex-end",
-    marginRight: 10,
-    marginTop: 10,
-  },
+  deleteIcon: { alignSelf: "flex-end", marginTop: 10, marginRight: 10 },
   imageBackground: {
     height: 100,
     overflow: "hidden",
@@ -180,21 +164,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  iconDelete: {
-    width: 20,
-    height: 20,
-    tintColor: COLORS.white,
-    alignSelf: "center",
-  },
   title: {
     ...STYLES.textPrimary,
     marginLeft: 20,
     marginVertical: 10,
   },
   textTitle: {
-    fontWeight: "600",
+    ...STYLES.textPrimary,
     marginTop: 5,
-    fontSize: 20,
     color: COLORS.black,
   },
   description: {

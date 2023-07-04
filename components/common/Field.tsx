@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, TextStyle } from "react-native";
-import { COLORS, STYLES } from "../../constants";
+import { STYLES } from "../../constants";
 
 type FieldProps = {
   title: string;

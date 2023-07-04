@@ -68,7 +68,7 @@ const ProductsScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={isLoading ? styles.emptySafeArea : styles.safeArea}>
       {isLoading && <Loading />}
       {data?.products && (
         <View>
@@ -96,6 +96,11 @@ const ProductsScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     ...STYLES.mainScreen,
+  },
+  emptySafeArea: {
+    alignItems: "center",
+    flex: 1,
+    justifyContent: "center",
   },
   screenTitle: {
     ...STYLES.textPrimary,

@@ -118,16 +118,7 @@ const styles = StyleSheet.create({
     height: 20,
     width: 20,
   },
-  iconWrapper: {
-    backgroundColor: COLORS.black,
-    height: 35,
-    width: 35,
-    marginLeft: 10,
-    marginTop: 10,
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+
   quantityButton: {
     marginLeft: 27,
   },
