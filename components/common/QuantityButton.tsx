@@ -16,14 +16,21 @@ type QuantityButtonProps = {
 
 const QuantityButton = (props: QuantityButtonProps) => {
   return (
-    <View style={{ ...styles.container, ...props.styles }}>
-      <TouchableOpacity onPress={props.leftAction}>
-        <Text style={styles.text}>-</Text>
-      </TouchableOpacity>
-      <Text style={styles.text}>{props.quantity}</Text>
-      <TouchableOpacity onPress={props.rightAction}>
-        <Text style={styles.text}>+</Text>
-      </TouchableOpacity>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <View style={{ ...styles.container, ...props.styles }}>
+        <TouchableOpacity onPress={props.leftAction}>
+          <Text style={styles.text}>-</Text>
+        </TouchableOpacity>
+        <Text style={styles.text}>{props.quantity}</Text>
+        <TouchableOpacity onPress={props.rightAction}>
+          <Text style={styles.text}>+</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -71,7 +71,7 @@ const ProductsScreen = () => {
     <SafeAreaView style={isLoading ? styles.emptySafeArea : styles.safeArea}>
       {isLoading && <Loading />}
       {data?.products && (
-        <View>
+        <View style={{ flex: 1 }}>
           <View style={{ marginTop: 15, marginLeft: 25, gap: 15 }}>
             <BackIcon
               hasBackground

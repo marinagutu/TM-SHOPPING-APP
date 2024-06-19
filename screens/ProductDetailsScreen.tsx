@@ -63,7 +63,7 @@ const ProductDetailsScreen = () => {
             <Field
               title={product?.title}
               description={product?.category}
-              titleStyle={{ width: "85%" }}
+              titleStyle={{ maxWidth: "75%" }}
             />
             <View style={styles.reviewsWrapper}>
               <Image
@@ -73,14 +73,15 @@ const ProductDetailsScreen = () => {
               <Text>{product?.rating} (Reviews Score)</Text>
             </View>
           </View>
-          <View id="second" style={{ marginRight: 0 }}>
+          <View id="second">
             <QuantityButton
               leftAction={() => updateQuantity(-1)}
               rightAction={() => updateQuantity(+1)}
               quantity={quantity}
-              styles={styles.quantityButton}
             />
-            <Text style={styles.stockText}>Available in stock</Text>
+            <Text style={styles.stockText} numberOfLines={2}>
+              Available in stock
+            </Text>
           </View>
         </View>
         <Field title="Brand" description={product?.brand} />
@@ -119,9 +120,6 @@ const styles = StyleSheet.create({
     width: 20,
   },
 
-  quantityButton: {
-    marginLeft: 27,
-  },
   ratingIcon: {
     width: 35,
     height: 35,

@@ -17,7 +17,7 @@ const HomeScreen = () => {
     useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
   const { data } = useFetch<string[]>({
-    endpoint: "products/categories",
+    endpoint: "products/category-list",
   });
 
   const renderItem = ({ item }: { item: string }) => {
@@ -40,7 +40,7 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={{ marginHorizontal: 30, backgroundColor: "white" }}>
+      <View style={{ flex: 1, marginHorizontal: 30 }}>
         <Text style={styles.title}>Categories</Text>
         {data && (
           <FlatList
