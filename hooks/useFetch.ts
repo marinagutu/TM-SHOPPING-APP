@@ -22,6 +22,7 @@ const useFetch = <T>(request: Request) => {
     try {
       const response = await axios.request(options);
       setData(response.data);
+      //test
       setIsLoading(false);
     } catch (error) {
       setError(error as AxiosError);
