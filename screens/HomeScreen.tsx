@@ -49,6 +49,10 @@ const HomeScreen = () => {
             renderItem={renderItem}
           />
         )}
+        {/* le aratam diferenta intre map si flatlist */}
+        {/* {data?.map((item, index) => (
+          <Text key={index}>{item}</Text>
+        ))} */}
       </View>
     </SafeAreaView>
   );
