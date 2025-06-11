@@ -117,7 +117,7 @@ const BasketScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <BackIcon
-        action={() => navigation.navigate("Home", { screen: "HomeScreen" })}
+        action={() => navigation.goBack()}
         hasBackground
         containerStyle={{ marginLeft: 20, marginTop: 10 }}
       />

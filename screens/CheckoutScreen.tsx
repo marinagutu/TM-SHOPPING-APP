@@ -6,7 +6,10 @@ import { Product } from "./ProductsScreen";
 import BackIcon from "../components/common/Icons/BackIcon";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import useCart from "../hooks/useCart";
-import { BasketStackParamList } from "../navigation/TabNavigator";
+import {
+  BasketStackParamList,
+  TabStackPramsList,
+} from "../navigation/TabNavigator";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import ButtonComponent from "../components/common/ButtonComponent";
 import CustomModal from "../components/common/CustomModal";
@@ -19,6 +22,9 @@ const CheckoutScreen = () => {
   const [open, setIsOpen] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState<number>();
 
+  const navigation =
+    useNavigation<NativeStackNavigationProp<TabStackPramsList>>();
+
   const submitOrder = () => {
     clearCart();
     setIsOpen(true);
@@ -26,7 +32,9 @@ const CheckoutScreen = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    navigation.navigate("BasketScreen");
+    navigation.reset({
+      routes: [{ name: "Basket" }],
+    });
   };
 
   const getTotals = () => {
@@ -44,9 +52,6 @@ const CheckoutScreen = () => {
   useEffect(() => {
     getTotals();
   }, [cartItems]);
-
-  const navigation =
-    useNavigation<NativeStackNavigationProp<BasketStackParamList>>();
 
   const renderItem = ({ item }: { item: Product }) => {
     return (
