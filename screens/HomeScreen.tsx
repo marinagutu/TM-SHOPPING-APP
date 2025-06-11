@@ -1,33 +1,39 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
-  FlatList,
   SafeAreaView,
   Text,
+  StyleSheet,
+  FlatList,
   TouchableOpacity,
   View,
 } from "react-native";
-import useFetch from "../hooks/useFetch";
-import { StyleSheet } from "react-native";
 import { COLORS, STYLES } from "../constants";
+import useFetch from "../hooks/useFetch";
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { HomeStackParamList } from "../navigation/TabNavigator";
+import { useEffect } from "react";
 
 const HomeScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
-
   const { data } = useFetch<string[]>({
     endpoint: "products/category-list",
   });
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+
+  function showData() {
+    if (data) console.log("data from api:", data);
+  }
+
+  useEffect(showData, [data]);
 
   const renderItem = ({ item }: { item: string }) => {
     return (
       <TouchableOpacity
         style={{ marginVertical: 5 }}
-        onPress={() =>
-          navigation.navigate("ProductsScreen", {
-            category: item,
-          })
+        onPress={
+          () => navigation.navigate("ProductsScreen", { category: item })
+          // navigation.goBack()
         }
       >
         <View style={styles.container}>
@@ -37,16 +43,16 @@ const HomeScreen = () => {
       </TouchableOpacity>
     );
   };
-
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={{ flex: 1, marginHorizontal: 30 }}>
+      <View style={{ marginHorizontal: 20, flex: 1 }}>
         <Text style={styles.title}>Categories</Text>
         {data && (
           <FlatList
-            showsVerticalScrollIndicator={false}
+            // numColumns={1}
             data={data}
             renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
           />
         )}
         {/* le aratam diferenta intre map si flatlist */}

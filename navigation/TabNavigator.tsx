@@ -9,10 +9,11 @@ import ContactScreen, { ContactForm } from "../screens/ContactScreen";
 import ProductsScreen from "../screens/ProductsScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
 import CheckoutScreen from "../screens/CheckoutScreen";
+import { NavigatorScreenParams } from "@react-navigation/native";
 
 export type TabStackPramsList = {
-  Home: undefined;
-  Basket: undefined;
+  Home: NavigatorScreenParams<HomeStackParamList>;
+  Basket: NavigatorScreenParams<BasketStackParamList>;
 };
 
 export type BasketStackParamList = {
@@ -25,7 +26,6 @@ export type BasketStackParamList = {
 
 export type HomeStackParamList = {
   HomeScreen: undefined;
-  BasketScreen: undefined;
   ProductsScreen: { category: string };
   ProductDetailsScreen: { product: Product };
 };

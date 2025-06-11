@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
 import axios, { AxiosError } from "axios";
+import { useEffect, useState } from "react";
 
 type Request = {
   endpoint: string;
@@ -8,7 +8,7 @@ type Request = {
 
 const useFetch = <T>(request: Request) => {
   const [data, setData] = useState<T>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError | null>(null);
 
   const options = {
@@ -18,15 +18,12 @@ const useFetch = <T>(request: Request) => {
 
   const fetchData = async () => {
     setIsLoading(true);
-
     try {
       const response = await axios.request(options);
       setData(response.data);
-      //test
-      setIsLoading(false);
     } catch (error) {
+      console.log("api error:", error);
       setError(error as AxiosError);
-      console.log(error);
     } finally {
       setIsLoading(false);
     }

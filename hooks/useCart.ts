@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Product } from "../screens/ProductsScreen";
-import { useEffect, useState } from "react";
-import { useIsFocused } from "@react-navigation/native";
+import { useCallback, useEffect, useState } from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import Toast from "react-native-toast-message";
 
 const useCart = () => {
@@ -102,6 +102,19 @@ const useCart = () => {
   useEffect(() => {
     getCart();
   }, [isFocused]);
+
+  //example
+  // const fetch = async () => {
+  //   try {
+  //     const response = await AsyncStorage.getItem("cart");
+  //   } catch {}
+  // };
+
+  // const fetchData = useCallback(() => {
+  //   fetch();
+  // }, []);
+
+  // useFocusEffect(fetchData);
 
   return { addToCart, removeFromCart, clearCart, cartItems, error, loading };
 };

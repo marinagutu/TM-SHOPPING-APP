@@ -16,7 +16,10 @@ import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import QuantityButton from "../components/common/QuantityButton";
-import { BasketStackParamList } from "../navigation/TabNavigator";
+import {
+  BasketStackParamList,
+  TabStackPramsList,
+} from "../navigation/TabNavigator";
 import BackIcon from "../components/common/Icons/BackIcon";
 import DeleteIcon from "../components/common/Icons/DeleteIcon";
 
@@ -25,7 +28,7 @@ const BasketScreen = () => {
   const [totalItems, setTotalItems] = useState<number>();
   const [totalPrice, setTotalPrice] = useState<number>();
   const navigation =
-    useNavigation<NativeStackNavigationProp<BasketStackParamList>>();
+    useNavigation<NativeStackNavigationProp<TabStackPramsList>>();
 
   const getTotals = () => {
     let price: number = 0;
@@ -49,8 +52,11 @@ const BasketScreen = () => {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ProductDetailsScreen", {
-            product: item,
+          navigation.navigate("Home", {
+            screen: "ProductDetailsScreen",
+            params: {
+              product: item,
+            },
           })
         }
         style={styles.productContainer}
@@ -111,7 +117,7 @@ const BasketScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <BackIcon
-        action={() => navigation.navigate("HomeScreen")}
+        action={() => navigation.navigate("Home", { screen: "HomeScreen" })}
         hasBackground
         containerStyle={{ marginLeft: 20, marginTop: 10 }}
       />
@@ -130,7 +136,9 @@ const BasketScreen = () => {
         title="Proceed to Checkout"
         trailingIcon={require("../assets/icon_right.png")}
         style={styles.checkoutButton}
-        action={() => navigation.navigate("ContactScreen")}
+        action={() =>
+          navigation.navigate("Basket", { screen: "ContactScreen" })
+        }
       />
     </SafeAreaView>
   );
