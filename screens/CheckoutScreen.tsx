@@ -31,7 +31,7 @@ const CheckoutScreen = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    router.replace("/basket");
+    router.replace("/(tabs)/(basket)");
   };
 
   const getTotals = () => {
