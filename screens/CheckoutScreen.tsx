@@ -4,26 +4,25 @@ import { STYLES, COLORS } from "../constants";
 import Field from "../components/common/Field";
 import { Product } from "./ProductsScreen";
 import BackIcon from "../components/common/Icons/BackIcon";
-import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import useCart from "../hooks/useCart";
-import {
-  BasketStackParamList,
-  TabStackPramsList,
-} from "../navigation/TabNavigator";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import ButtonComponent from "../components/common/ButtonComponent";
 import CustomModal from "../components/common/CustomModal";
 import { useEffect, useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 const CheckoutScreen = () => {
-  type CheckoutScreenProps = RouteProp<BasketStackParamList, "CheckoutScreen">;
-  const params = useRoute<CheckoutScreenProps>().params;
+  const params = useLocalSearchParams<{
+    name?: string;
+    phone?: string;
+    email?: string;
+    city?: string;
+    address?: string;
+  }>();
   const { cartItems, clearCart } = useCart();
   const [open, setIsOpen] = useState<boolean>(false);
   const [totalPrice, setTotalPrice] = useState<number>();
 
-  const navigation =
-    useNavigation<NativeStackNavigationProp<TabStackPramsList>>();
+  const router = useRouter();
 
   const submitOrder = () => {
     clearCart();
@@ -32,9 +31,7 @@ const CheckoutScreen = () => {
 
   const closeModal = () => {
     setIsOpen(false);
-    navigation.reset({
-      routes: [{ name: "Basket" }],
-    });
+    router.replace("/basket");
   };
 
   const getTotals = () => {
@@ -73,7 +70,7 @@ const CheckoutScreen = () => {
       <BackIcon
         hasBackground
         containerStyle={{ marginLeft: 0, marginTop: 10, marginBottom: 10 }}
-        action={() => navigation.goBack()}
+        action={() => router.back()}
       />
       <Text style={styles.title}>Delivery Address</Text>
       <View style={styles.addressCard}>

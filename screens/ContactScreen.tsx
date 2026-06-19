@@ -1,5 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Image,
   SafeAreaView,
@@ -12,9 +10,9 @@ import BackIcon from "../components/common/Icons/BackIcon";
 import { StyleSheet } from "react-native";
 import { COLORS } from "../constants";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
-import { BasketStackParamList } from "../navigation/TabNavigator";
 import ButtonComponent from "../components/common/ButtonComponent";
 import { useState } from "react";
+import { useRouter } from "expo-router";
 
 export type ContactForm = {
   name: string;
@@ -25,8 +23,7 @@ export type ContactForm = {
 };
 
 const ContactScreen = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<BasketStackParamList>>();
+  const router = useRouter();
 
   const initialValues: ContactForm = {
     name: "",
@@ -49,7 +46,7 @@ const ContactScreen = () => {
     );
 
     if (isFormValid) {
-      navigation.navigate("CheckoutScreen", values);
+      router.push({ pathname: "/checkout", params: values });
     } else {
       Toast.show({
         type: "error",
@@ -62,7 +59,7 @@ const ContactScreen = () => {
     <SafeAreaView style={styles.safeArea}>
       <ScrollView>
         <BackIcon
-          action={() => navigation.goBack()}
+          action={() => router.back()}
           hasBackground
           containerStyle={{ marginLeft: 12, marginTop: 10 }}
         />
@@ -106,7 +103,7 @@ const ContactScreen = () => {
           <ButtonComponent
             title={"Cancel"}
             action={() => {
-              navigation.goBack();
+              router.back();
             }}
             style={styles.cancelButton}
             textStyle={{ color: COLORS.graySecondary, fontWeight: "700" }}

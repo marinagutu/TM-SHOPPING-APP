@@ -2,6 +2,7 @@
   "expo": {
     "name": "TM-SHOPPING",
     "slug": "TM-SHOPPING",
+    "scheme": "tm-shopping",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,7 +24,11 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "plugins": [
+      "expo-router"
+    ],
     "web": {
+      "bundler": "metro",
       "favicon": "./assets/favicon.png"
     }
   }

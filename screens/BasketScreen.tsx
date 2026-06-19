@@ -13,22 +13,16 @@ import ButtonComponent from "../components/common/ButtonComponent";
 import useCart from "../hooks/useCart";
 import { Product } from "./ProductsScreen";
 import { useEffect, useState } from "react";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import QuantityButton from "../components/common/QuantityButton";
-import {
-  BasketStackParamList,
-  TabStackPramsList,
-} from "../navigation/TabNavigator";
 import BackIcon from "../components/common/Icons/BackIcon";
 import DeleteIcon from "../components/common/Icons/DeleteIcon";
+import { useRouter } from "expo-router";
 
 const BasketScreen = () => {
   const { cartItems, removeFromCart, addToCart } = useCart();
   const [totalItems, setTotalItems] = useState<number>();
   const [totalPrice, setTotalPrice] = useState<number>();
-  const navigation =
-    useNavigation<NativeStackNavigationProp<TabStackPramsList>>();
+  const router = useRouter();
 
   const getTotals = () => {
     let price: number = 0;
@@ -52,11 +46,9 @@ const BasketScreen = () => {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("Home", {
-            screen: "ProductDetailsScreen",
-            params: {
-              product: item,
-            },
+          router.push({
+            pathname: "/product-details",
+            params: { product: JSON.stringify(item) },
           })
         }
         style={styles.productContainer}
@@ -117,7 +109,7 @@ const BasketScreen = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <BackIcon
-        action={() => navigation.goBack()}
+        action={() => router.back()}
         hasBackground
         containerStyle={{ marginLeft: 20, marginTop: 10 }}
       />
@@ -136,9 +128,7 @@ const BasketScreen = () => {
         title="Proceed to Checkout"
         trailingIcon={require("../assets/icon_right.png")}
         style={styles.checkoutButton}
-        action={() =>
-          navigation.navigate("Basket", { screen: "ContactScreen" })
-        }
+        action={() => router.push("/contact")}
       />
     </SafeAreaView>
   );

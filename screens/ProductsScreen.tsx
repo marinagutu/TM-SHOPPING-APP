@@ -7,15 +7,12 @@ import {
   FlatList,
   StyleSheet,
 } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { STYLES } from "../constants";
 import useFetch from "../hooks/useFetch";
-import { RouteProp } from "@react-navigation/native";
-import { HomeStackParamList } from "../navigation/TabNavigator";
 import ErrorComponent from "../components/common/ErrorComponent";
 import BackIcon from "../components/common/Icons/BackIcon";
 import Loading from "../components/common/Loading";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useLocalSearchParams, useRouter } from "expo-router";
 
 export type Product = {
   id: number;
@@ -37,12 +34,11 @@ type Products = {
 };
 
 const ProductsScreen = () => {
-  type ProductScreenProps = RouteProp<HomeStackParamList, "ProductsScreen">;
-  const params = useRoute<ProductScreenProps>().params;
-  const navigation =
-    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const { category } = useLocalSearchParams<{ category?: string }>();
+  const router = useRouter();
+  const selectedCategory = category ?? "";
   const { data, isLoading, error } = useFetch<Products>({
-    endpoint: `products/category/${params.category}`,
+    endpoint: `products/category/${selectedCategory}`,
   });
 
   const renderItem = ({ item }: { item: Product }) => {
@@ -50,7 +46,10 @@ const ProductsScreen = () => {
       <TouchableOpacity
         style={styles.container}
         onPress={() =>
-          navigation.navigate("ProductDetailsScreen", { product: item })
+          router.push({
+            pathname: "/product-details",
+            params: { product: JSON.stringify(item) },
+          })
         }
       >
         <Image source={{ uri: item.thumbnail }} style={styles.image} />
@@ -76,9 +75,9 @@ const ProductsScreen = () => {
             <BackIcon
               hasBackground
               containerStyle={{}}
-              action={() => navigation.goBack()}
+              action={() => router.back()}
             />
-            <Text style={styles.screenTitle}>{params.category}</Text>
+            <Text style={styles.screenTitle}>{selectedCategory}</Text>
           </View>
           <FlatList
             data={data?.products}

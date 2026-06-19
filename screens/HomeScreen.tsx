@@ -8,18 +8,15 @@ import {
 } from "react-native";
 import { COLORS, STYLES } from "../constants";
 import useFetch from "../hooks/useFetch";
-import { useNavigation } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { HomeStackParamList } from "../navigation/TabNavigator";
 import { useEffect } from "react";
+import { useRouter } from "expo-router";
 
 const HomeScreen = () => {
   const { data } = useFetch<string[]>({
     endpoint: "products/category-list",
   });
 
-  const navigation =
-    useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const router = useRouter();
 
   function showData() {
     if (data) console.log("data from api:", data);
@@ -31,9 +28,11 @@ const HomeScreen = () => {
     return (
       <TouchableOpacity
         style={{ marginVertical: 5 }}
-        onPress={
-          () => navigation.navigate("ProductsScreen", { category: item })
-          // navigation.goBack()
+        onPress={() =>
+          router.push({
+            pathname: "/products/[category]",
+            params: { category: item },
+          })
         }
       >
         <View style={styles.container}>

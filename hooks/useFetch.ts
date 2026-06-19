@@ -10,16 +10,16 @@ const useFetch = <T>(request: Request) => {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<AxiosError | null>(null);
+  const url = `https://dummyjson.com/${request.endpoint}`;
 
-  const options = {
-    method: "GET",
-    url: `https://dummyjson.com/${request.endpoint}`,
-  };
-
-  const fetchData = async () => {
+  const fetchData = async (requestUrl = url) => {
     setIsLoading(true);
+    setError(null);
     try {
-      const response = await axios.request(options);
+      const response = await axios.request({
+        method: "GET",
+        url: requestUrl,
+      });
       setData(response.data);
     } catch (error) {
       console.log("api error:", error);
@@ -30,11 +30,11 @@ const useFetch = <T>(request: Request) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    setData(undefined);
+    fetchData(url);
+  }, [url]);
 
   const refetch = () => {
-    setIsLoading(true);
     fetchData();
   };
 

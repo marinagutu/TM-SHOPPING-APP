@@ -1,7 +1,6 @@
 import { SafeAreaView, StyleSheet, Text } from "react-native";
 import { STYLES } from "../constants";
-import { RouteProp, useRoute } from "@react-navigation/native";
-import { HomeStackParamList } from "../navigation/TabNavigator";
+import { useLocalSearchParams } from "expo-router";
 
 export type Product = {
   id: number;
@@ -23,13 +22,11 @@ type Products = {
 };
 
 const ProductsScreen = () => {
-  type ProductsScreenProps = RouteProp<HomeStackParamList, "ProductsScreen">;
-
-  const param = useRoute<ProductsScreenProps>().params;
+  const { category } = useLocalSearchParams<{ category?: string }>();
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <Text>{param.category}</Text>
+      <Text>{category}</Text>
     </SafeAreaView>
   );
 };
