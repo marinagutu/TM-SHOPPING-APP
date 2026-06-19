@@ -1,27 +1,24 @@
 import { SafeAreaView, View, StyleSheet, ImageBackground } from "react-native";
 import { Image, Text } from "react-native";
 import { COLORS, STYLES } from "../constants";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
-import { RouteProp } from "@react-navigation/native";
-import { HomeStackParamList } from "../navigation/TabNavigator";
 import QuantityButton from "../components/common/QuantityButton";
 import Field from "../components/common/Field";
 import ButtonComponent from "../components/common/ButtonComponent";
 import Toast from "react-native-toast-message";
 import useCart from "../hooks/useCart";
 import BackIcon from "../components/common/Icons/BackIcon";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import { Product } from "./ProductsScreen";
 
 const ProductDetailsScreen = () => {
-  type ProductScreenProps = RouteProp<
-    HomeStackParamList,
-    "ProductDetailsScreen"
-  >;
-  const params = useRoute<ProductScreenProps>().params;
-  const product = params?.product;
-  const navigation = useNavigation();
+  const { product: productParam } = useLocalSearchParams<{
+    product?: string;
+  }>();
+  const product = JSON.parse(productParam ?? "{}") as Product;
+  const router = useRouter();
   const goBack = () => {
-    navigation.goBack();
+    router.back();
   };
   const [quantity, setQuantity] = useState<number>(1);
   const { addToCart } = useCart();
