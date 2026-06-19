@@ -6,23 +6,19 @@ export default function TabLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }}>
       <Tabs.Screen
-        name="index"
+        name="(home)"
         options={{
           title: "Home",
           tabBarIcon: HomeIcon,
         }}
       />
       <Tabs.Screen
-        name="basket"
+        name="(basket)"
         options={{
           title: "Basket",
           tabBarIcon: BasketIcon,
         }}
       />
-      <Tabs.Screen name="products/[category]" options={{ href: null }} />
-      <Tabs.Screen name="product-details" options={{ href: null }} />
-      <Tabs.Screen name="contact" options={{ href: null }} />
-      <Tabs.Screen name="checkout" options={{ href: null }} />
     </Tabs>
   );
 }
