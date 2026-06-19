@@ -1,9 +1,8 @@
-import { SafeAreaView, View, StyleSheet, ImageBackground } from "react-native";
+import { SafeAreaView, View, StyleSheet, ScrollView } from "react-native";
 import { Image, Text } from "react-native";
 import { COLORS, STYLES } from "../constants";
 import { useState } from "react";
 import QuantityButton from "../components/common/QuantityButton";
-import Field from "../components/common/Field";
 import ButtonComponent from "../components/common/ButtonComponent";
 import Toast from "react-native-toast-message";
 import useCart from "../hooks/useCart";
@@ -27,73 +26,91 @@ const ProductDetailsScreen = () => {
     // Calculate the new quantity based on the change
     const newQuantity = quantity + change;
     // Check if the new quantity is within the allowed range
+    if (!product) return;
+
     if (newQuantity >= 1 && newQuantity <= parseInt(product.stock)) {
       setQuantity(newQuantity); // Update the quantity
     } else if (newQuantity < 1) {
       setQuantity(1); // Set the quantity to the minimum (1)
     } else if (newQuantity > parseInt(product.stock)) {
-      setQuantity(parseInt(product?.stock)); // Set the quantity to the maximum (product.stock)
+      setQuantity(parseInt(product.stock)); // Set the quantity to the maximum (product.stock)
     }
+  }
+
+  if (!product) {
+    return (
+      <SafeAreaView style={styles.emptySafeArea}>
+        <BackIcon hasBackground containerStyle={{}} action={goBack} />
+        <Text>Product details are unavailable.</Text>
+      </SafeAreaView>
+    );
   }
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ImageBackground
-        resizeMode="stretch"
-        source={{ uri: product?.thumbnail }}
-        style={{ flex: 0.4 }}
-      >
+      <View style={styles.imageSection}>
         <BackIcon
           hasBackground
-          containerStyle={{ marginLeft: 15, marginTop: 15 }}
+          containerStyle={styles.backButton}
           action={goBack}
         />
-      </ImageBackground>
-      <View style={styles.detailsCard}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <View id="first">
-            <Field
-              title={product?.title}
-              description={product?.category}
-              titleStyle={{ maxWidth: "75%" }}
-            />
-            <View style={styles.reviewsWrapper}>
+        <Image source={{ uri: product.thumbnail }} style={styles.heroImage} />
+      </View>
+
+      <ScrollView
+        style={styles.detailsCard}
+        contentContainerStyle={styles.detailsContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.titleRow}>
+          <View style={styles.titleBlock}>
+            <Text style={styles.categoryText}>{product.category}</Text>
+            <Text style={styles.title}>{product.title}</Text>
+          </View>
+          <View style={styles.priceBadge}>
+            <Text style={styles.priceText}>${product.price}</Text>
+          </View>
+        </View>
+
+        <View style={styles.metaRow}>
+          <View style={styles.metaPill}>
+            <Text style={styles.metaLabel}>Brand</Text>
+            <Text style={styles.metaValue}>{product.brand}</Text>
+          </View>
+          <View style={styles.metaPill}>
+            <Text style={styles.metaLabel}>Rating</Text>
+            <View style={styles.ratingRow}>
               <Image
                 source={require("../assets/icon_rating.png")}
                 style={styles.ratingIcon}
               />
-              <Text>{product?.rating} (Reviews Score)</Text>
+              <Text style={styles.metaValue}>{product.rating}</Text>
             </View>
           </View>
-          <View id="second">
-            <QuantityButton
-              leftAction={() => updateQuantity(-1)}
-              rightAction={() => updateQuantity(+1)}
-              quantity={quantity}
-            />
-            <Text style={styles.stockText} numberOfLines={2}>
-              Available in stock
-            </Text>
-          </View>
         </View>
-        <Field title="Brand" description={product?.brand} />
-        <Field
-          title="Description"
-          description={product?.description}
-          descriptionStyle={{ marginTop: 5 }}
-        />
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Field
-            title={"Total Price"}
-            titleStyle={STYLES.textSecondary}
-            description={`$${product?.price}`}
-            descriptionStyle={STYLES.textPrimary}
+
+        <View style={styles.descriptionCard}>
+          <Text style={styles.sectionTitle}>Description</Text>
+          <Text style={styles.description}>{product.description}</Text>
+        </View>
+
+        <View style={styles.actionCard}>
+          <View>
+            <Text style={styles.stockText}>Available in stock</Text>
+            <Text style={styles.stockCount}>{product.stock} items</Text>
+          </View>
+          <QuantityButton
+            leftAction={() => updateQuantity(-1)}
+            rightAction={() => updateQuantity(+1)}
+            quantity={quantity}
           />
+        </View>
+
+        <View style={styles.footer}>
+          <View>
+            <Text style={styles.totalLabel}>Total Price</Text>
+            <Text style={styles.totalPrice}>${product.price * quantity}</Text>
+          </View>
           <ButtonComponent
             action={() => addToCart(product, quantity)}
             title="Add to cart"
@@ -101,7 +118,7 @@ const ProductDetailsScreen = () => {
             frontIcon={require("../assets/icon_shopping.png")}
           />
         </View>
-      </View>
+      </ScrollView>
       <Toast position="bottom" bottomOffset={20}></Toast>
     </SafeAreaView>
   );
@@ -110,41 +127,195 @@ const ProductDetailsScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     ...STYLES.mainScreen,
+    backgroundColor: "#F7F8FA",
   },
-  backIcon: {
-    tintColor: "white",
-    height: 20,
-    width: 20,
+  emptySafeArea: {
+    alignItems: "center",
+    flex: 1,
+    gap: 20,
+    justifyContent: "center",
+  },
+  imageSection: {
+    backgroundColor: "#F1F2F5",
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    minHeight: 330,
+    overflow: "hidden",
+    paddingHorizontal: 18,
+    paddingTop: 14,
+  },
+
+  backButton: {
+    marginBottom: 8,
+  },
+
+  heroImage: {
+    alignSelf: "center",
+    flex: 1,
+    minHeight: 260,
+    resizeMode: "contain",
+    width: "100%",
   },
 
   ratingIcon: {
-    width: 35,
-    height: 35,
-    tintColor: "orange",
-    marginRight: 10,
+    width: 18,
+    height: 18,
+    tintColor: "#E8B44C",
+    marginRight: 5,
   },
-  reviewsWrapper: {
-    flexDirection: "row",
+
+  ratingRow: {
     alignItems: "center",
-    marginVertical: 15,
+    flexDirection: "row",
   },
-  stockText: {
+
+  titleRow: {
+    flexDirection: "row",
+    gap: 14,
+    justifyContent: "space-between",
+  },
+
+  titleBlock: {
+    flex: 1,
+  },
+
+  categoryText: {
+    color: "#B7791F",
+    fontSize: 12,
+    fontWeight: "800",
+    letterSpacing: 0,
+    marginBottom: 6,
+    textTransform: "uppercase",
+  },
+
+  title: {
+    color: COLORS.black,
+    fontSize: 25,
+    fontWeight: "900",
+    lineHeight: 31,
+  },
+
+  priceBadge: {
+    alignItems: "center",
+    backgroundColor: COLORS.black,
+    borderRadius: 18,
+    justifyContent: "center",
+    minWidth: 86,
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    height: 54,
+  },
+
+  priceText: {
+    color: COLORS.white,
+    fontSize: 18,
+    fontWeight: "900",
+  },
+
+  metaRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginTop: 20,
+  },
+
+  metaPill: {
+    backgroundColor: "#F6F7FB",
+    borderRadius: 18,
+    flex: 1,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+
+  metaLabel: {
+    color: COLORS.graySecondary,
+    fontSize: 12,
     fontWeight: "700",
+    marginBottom: 5,
+  },
+
+  metaValue: {
+    color: COLORS.black,
+    fontSize: 15,
+    fontWeight: "800",
+    textTransform: "capitalize",
+  },
+
+  descriptionCard: {
     marginTop: 22,
   },
-  detailsCard: {
-    flex: 0.7,
-    backgroundColor: COLORS.white,
-    marginTop: -20,
-    borderTopEndRadius: 20,
-    borderTopLeftRadius: 20,
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+
+  sectionTitle: {
+    color: COLORS.black,
+    fontSize: 18,
+    fontWeight: "900",
+    marginBottom: 8,
   },
-  cartButton: { width: 150, borderRadius: 20, marginTop: 20 },
+
+  description: {
+    color: COLORS.grayPrimary,
+    fontSize: 15,
+    lineHeight: 22,
+  },
+
+  stockText: {
+    color: COLORS.black,
+    fontSize: 15,
+    fontWeight: "900",
+  },
+
+  stockCount: {
+    color: COLORS.graySecondary,
+    fontSize: 13,
+    fontWeight: "600",
+    marginTop: 4,
+  },
+
+  actionCard: {
+    alignItems: "center",
+    backgroundColor: "#F6F7FB",
+    borderRadius: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 22,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+
+  detailsCard: {
+    backgroundColor: COLORS.white,
+    borderTopEndRadius: 30,
+    borderTopLeftRadius: 30,
+    flex: 1,
+    marginTop: -28,
+  },
+
+  detailsContent: {
+    paddingBottom: 30,
+    paddingHorizontal: 20,
+    paddingTop: 24,
+  },
+
+  footer: {
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 24,
+  },
+
+  totalLabel: {
+    color: COLORS.graySecondary,
+    fontSize: 13,
+    fontWeight: "700",
+  },
+
+  totalPrice: {
+    color: COLORS.black,
+    fontSize: 24,
+    fontWeight: "900",
+    marginTop: 3,
+  },
+
+  cartButton: { width: 165, borderRadius: 22 },
 });
 
 export default ProductDetailsScreen;

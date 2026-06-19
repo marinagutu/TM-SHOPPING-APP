@@ -65,7 +65,7 @@ const ContactScreen = () => {
         />
         <Text style={styles.title}>Details</Text>
         <Image
-          source={require("../assets/icon_data.jpg")}
+          source={require("../assets/delivery_details_illustration.png")}
           style={styles.image}
         />
         <TextInput

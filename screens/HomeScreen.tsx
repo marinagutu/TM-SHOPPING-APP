@@ -27,7 +27,8 @@ const HomeScreen = () => {
   const renderItem = ({ item }: { item: string }) => {
     return (
       <TouchableOpacity
-        style={{ marginVertical: 5 }}
+        activeOpacity={0.78}
+        style={styles.categoryCard}
         onPress={() =>
           router.push({
             pathname: "/products/[category]",
@@ -35,22 +36,30 @@ const HomeScreen = () => {
           })
         }
       >
-        <View style={styles.container}>
-          <Text style={styles.text}>{item}</Text>
-          <View style={styles.dot} />
+        <View style={styles.accentLine} />
+        <View style={styles.categoryIcon}>
+          <Text style={styles.categoryInitial}>{item.charAt(0)}</Text>
         </View>
+        <Text style={styles.text} numberOfLines={2}>
+          {item}
+        </Text>
+        <Text style={styles.subtitle}>Shop now</Text>
       </TouchableOpacity>
     );
   };
   return (
     <SafeAreaView style={styles.safeArea}>
-      <View style={{ marginHorizontal: 20, flex: 1 }}>
-        <Text style={styles.title}>Categories</Text>
+      <View style={styles.content}>
+        <View style={styles.header}>
+          <Text style={styles.kicker}>TM Shopping</Text>
+          <Text style={styles.title}>What are you looking for?</Text>
+        </View>
         {data && (
           <FlatList
-            // numColumns={1}
             data={data}
             renderItem={renderItem}
+            keyExtractor={(item) => item}
+            contentContainerStyle={styles.listContent}
             showsVerticalScrollIndicator={false}
           />
         )}
@@ -66,43 +75,94 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   safeArea: {
     ...STYLES.mainScreen,
+    backgroundColor: "#FFFFFF",
   },
 
-  container: {
-    backgroundColor: COLORS.black,
-    height: 60,
-    borderRadius: 30,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 0,
-    paddingHorizontal: 15,
-    alignItems: "center",
-  },
-
-  category: {
+  content: {
     flex: 1,
-    justifyContent: "space-between",
-    flexDirection: "row",
-    marginTop: 0,
-    alignItems: "center",
+    paddingHorizontal: 20,
   },
+
+  listContent: {
+    paddingBottom: 24,
+  },
+
+  categoryCard: {
+    alignItems: "center",
+    backgroundColor: "#F6F7FB",
+    borderRadius: 20,
+    flexDirection: "row",
+    marginBottom: 12,
+    minHeight: 86,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    shadowColor: COLORS.black,
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.06,
+    shadowRadius: 14,
+    elevation: 3,
+  },
+
+  accentLine: {
+    backgroundColor: "#E8B44C",
+    borderRadius: 4,
+    height: 46,
+    marginRight: 14,
+    width: 5,
+  },
+
+  categoryIcon: {
+    width: 46,
+    height: 46,
+    borderRadius: 15,
+    backgroundColor: COLORS.black,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 14,
+  },
+
+  categoryInitial: {
+    color: COLORS.white,
+    fontSize: 20,
+    fontWeight: "900",
+    textTransform: "uppercase",
+  },
+
+  header: {
+    marginBottom: 20,
+    marginTop: 10,
+  },
+
   title: {
     ...STYLES.textPrimary,
-    marginVertical: 10,
+    fontSize: 30,
+    lineHeight: 36,
+    maxWidth: 280,
   },
 
-  dot: {
-    height: 30,
-    backgroundColor: COLORS.white,
-    borderRadius: 100,
-    width: 30,
+  kicker: {
+    color: "#B7791F",
+    fontSize: 13,
+    fontWeight: "800",
+    letterSpacing: 0,
+    marginBottom: 8,
+    textTransform: "uppercase",
   },
 
   text: {
-    color: COLORS.white,
+    flex: 1,
+    color: COLORS.black,
     textTransform: "capitalize",
-    fontSize: 16,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontWeight: "800",
+    lineHeight: 23,
+  },
+
+  subtitle: {
+    color: COLORS.graySecondary,
+    fontSize: 13,
+    fontWeight: "600",
+    marginLeft: 12,
   },
 });
 
